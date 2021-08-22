@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {{product.desc|truncatewords:155}}
+{% endblock %}
+{% block title %}
+    {{product.name}}-M cart
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div>
+        <p><a href="{% url 'ecommerceapp:allProdCat' %}">Home</a> |<a href="{{ product.category.get_url }} "></a>{{product.name}}</p>
+    </div>
+    <div class="col-12">
+            <div class="row no-gutters">
+              <div class="col-md-6">
+                  <img class="card mx-auto" src="{{product.image.url}}" alt="{{product.name}}">
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                <h1>{{product.name}}</h1>
+                <p>₹ {{product.price}}</p>
+                <p class="text-justify">{{product.desc}}</p>
+
+                {% if product.stock <= 0 %}
+                <p><b>Out Of stock</b></p>
+
+                {% else %}
+                    <a class="btn btn-warning btn-sm" href="{% url 'cart:add_cart' product.id %}">Add to Cart</a>
+                {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+{% endblock %}
+
